@@ -1,5 +1,6 @@
 package com.gudboy.alarma;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,12 +10,13 @@ import com.gudboy.animal.Animal;
 public class Alarma {
 
     private final long id;
-    private Periodicidad periodicidad;
+    private IPeriodicidad periodicidad;
     private final Animal animal;
     private final List<IVeterinarioObserver> observers = new ArrayList<>();
     private final List<AccionAlarma> acciones = new ArrayList<>();
+    private LocalDate proximaEjecucion;
 
-    public Alarma(long id, Periodicidad periodicidad, Animal animal) {
+    public Alarma(long id, IPeriodicidad periodicidad, Animal animal) {
         this.id = id;
         this.periodicidad = periodicidad;
         this.animal = animal;
@@ -24,6 +26,8 @@ public class Alarma {
         for (IVeterinarioObserver observer : observers) {
             observer.notificar(this);
         }
+        // La estrategia de periodicidad resuelve cuando vuelve a dispararse la alarma.
+        proximaEjecucion = periodicidad.proximaFecha(LocalDate.now());
     }
 
     public void subscribir(IVeterinarioObserver observer) {
@@ -44,12 +48,16 @@ public class Alarma {
         return id;
     }
 
-    public Periodicidad getPeriodicidad() {
+    public IPeriodicidad getPeriodicidad() {
         return periodicidad;
     }
 
-    public void setPeriodicidad(Periodicidad periodicidad) {
+    public void setPeriodicidad(IPeriodicidad periodicidad) {
         this.periodicidad = periodicidad;
+    }
+
+    public LocalDate getProximaEjecucion() {
+        return proximaEjecucion;
     }
 
     public Animal getAnimal() {

@@ -22,11 +22,16 @@ unitarios con JUnit 5.
 ## Patrones de diseno aplicados
 
 - **State** (`animal.estado`): el estado del animal (`Sano`, `EnTratamiento`, `Recuperado`)
-  resuelve si es adoptable, evitando condicionales por estado.
+  resuelve si es adoptable y encapsula las transiciones (`iniciarTratamiento()`,
+  `finalizarTratamiento()`): es cada estado quien decide a que estado pasar, evitando
+  condicionales por estado en `Animal`.
 - **Strategy** (`exportacion`): `IExportadorStrategy` encapsula el algoritmo de exportacion.
   Agregar un formato nuevo solo requiere una clase nueva, sin modificar `FichaMedica`.
 - **Strategy** (`notificacion`): `INotificador` permite cambiar el medio de envio del
   recordatorio (SMS, WhatsApp, Email) en tiempo de ejecucion segun la preferencia del cliente.
+- **Strategy** (`alarma`): `IPeriodicidad` (`PeriodicidadDiaria`, `PeriodicidadSemanal`,
+  `PeriodicidadMensual`) encapsula el calculo de la proxima fecha de disparo; agregar una
+  frecuencia nueva no modifica `Alarma`.
 - **Observer** (`alarma`): `Alarma` es el sujeto y los `Veterinario` son los observadores.
   Al dispararse, la alarma notifica a todos los veterinarios suscriptos.
 - **Adapter** (`autenticacion`): `AdaptadorAutenticacion` adapta el `AuthServiceExterno`

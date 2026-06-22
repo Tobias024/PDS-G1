@@ -23,7 +23,7 @@ class AlarmaObserverTest {
     void setUp() {
         FichaMedica ficha = new FichaMedica(1L, 0.5, 10.0, 4, "Control periodico");
         animal = new AnimalDomestico(1L, "Firulais", ficha, new EnTratamiento(), TipoDomestico.PERRO);
-        alarma = new Alarma(1L, Periodicidad.MENSUAL, animal);
+        alarma = new Alarma(1L, new PeriodicidadMensual(), animal);
         alarma.agregarAccion(new ControlParasitos());
         alarma.agregarAccion(new Vacunar());
     }

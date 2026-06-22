@@ -33,6 +33,16 @@ public abstract class Animal {
         alarmas.add(alarma);
     }
 
+    // Las transiciones se delegan al estado actual (State): es el estado quien decide
+    // si la transicion es valida y a que estado pasar.
+    public void iniciarTratamiento() {
+        estado.iniciarTratamiento(this);
+    }
+
+    public void finalizarTratamiento() {
+        estado.finalizarTratamiento(this);
+    }
+
     public void cambiarEstado(EstadoAnimal nuevoEstado) {
         this.estado = nuevoEstado;
     }

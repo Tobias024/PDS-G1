@@ -1,6 +1,7 @@
 package com.gudboy.animal;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -36,10 +37,19 @@ class AnimalAdopcionTest {
         AnimalDomestico gato = new AnimalDomestico(2L, "Michi", nuevaFicha(), new EnTratamiento(), TipoDomestico.GATO);
         assertFalse(gato.puedeSerAdoptado());
 
-        gato.cambiarEstado(new Recuperado());
+        // La transicion vive dentro del estado (State): EnTratamiento -> Recuperado.
+        gato.finalizarTratamiento();
 
+        assertTrue(gato.getEstado() instanceof Recuperado);
         assertTrue(gato.puedeSerAdoptado());
         assertFalse(gato.estaEnTratamiento());
+    }
+
+    @Test
+    void noSePuedeFinalizarTratamientoDeUnAnimalSano() {
+        AnimalDomestico perro = new AnimalDomestico(5L, "Toby", nuevaFicha(), new Sano(), TipoDomestico.PERRO);
+
+        assertThrows(IllegalStateException.class, perro::finalizarTratamiento);
     }
 
     @Test
