@@ -14,14 +14,16 @@ public class RegistroAtencion {
     private final List<AccionAlarma> acciones;
     private final boolean esTratamiento;
     private boolean finalizado;
+    private final TipoRegistro tipoRegistro;
 
     public RegistroAtencion(LocalDateTime fecha, Veterinario veterinario, List<AccionAlarma> acciones,
-                            boolean esTratamiento, boolean finalizado) {
+                            boolean esTratamiento, boolean finalizado, TipoRegistro tipoRegistro) {
         this.fecha = fecha;
         this.veterinario = veterinario;
         this.acciones = acciones;
         this.esTratamiento = esTratamiento;
         this.finalizado = finalizado;
+        this.tipoRegistro = tipoRegistro;
     }
 
     public LocalDateTime getFecha() {
@@ -46,5 +48,9 @@ public class RegistroAtencion {
 
     public void setFinalizado(boolean finalizado) {
         this.finalizado = finalizado;
+    }
+
+    public TipoRegistro getTipoRegistro() {
+        return tipoRegistro;
     }
 }
