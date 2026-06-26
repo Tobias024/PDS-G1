@@ -13,6 +13,11 @@ public abstract class AccionAlarma {
 
     public abstract String getDescripcion();
 
+    public final void realizar(String comentario) {
+        ejecutar();
+        completada(comentario);
+    }
+
     public void completada(String comentario) {
         this.completado = true;
         this.comentario = comentario;

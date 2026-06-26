@@ -31,8 +31,7 @@ public class Veterinario extends Usuario implements IVeterinarioObserver {
     // Cualquier veterinario puede atender una alarma disparada.
     public RegistroAtencion atenderAlarma(Alarma alarma, String comentario, boolean esTratamiento, boolean finalizado) {
         for (AccionAlarma accion : alarma.getAcciones()) {
-            accion.ejecutar();
-            accion.completada(comentario);
+            accion.realizar(comentario);
         }
 
         RegistroAtencion registro = new RegistroAtencion(

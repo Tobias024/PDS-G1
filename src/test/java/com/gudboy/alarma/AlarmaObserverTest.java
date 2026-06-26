@@ -56,6 +56,16 @@ class AlarmaObserverTest {
     }
 
     @Test
+    void realizarEncapsulaEjecutarYCompletar() {
+        ControlParasitos accion = new ControlParasitos();
+
+        accion.realizar("Control aplicado");
+
+        assertTrue(accion.isCompletado());
+        assertEquals("Control aplicado", accion.getComentario());
+    }
+
+    @Test
     void atenderAlarmaCompletaLasAccionesYRegistraEnLaFichaMedica() {
         Veterinario veterinario = new Veterinario("v1", "Dr. House", "house@gudboy.com");
         alarma.subscribir(veterinario);
