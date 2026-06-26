@@ -42,7 +42,7 @@ public class Cliente {
         if (!puedeAdoptar()) {
             throw new IllegalStateException("El cliente alcanzo el maximo de adopciones permitidas");
         }
-        if (!animal.puedeSerAdoptado()) {
+        if (!animal.esAdoptable()) {
             throw new IllegalStateException("El animal no se encuentra disponible para adopcion");
         }
         Adopcion adopcion = new Adopcion(LocalDate.now(), motivo, animal);

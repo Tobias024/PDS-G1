@@ -13,7 +13,7 @@ public class AnimalSalvaje extends Animal {
 
     // Los animales salvajes nunca pueden ser adoptados.
     @Override
-    public boolean puedeSerAdoptado() {
+    public boolean esAdoptable() {
         return false;
     }
 

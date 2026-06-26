@@ -20,7 +20,7 @@ class AnimalAdopcionTest {
     void domesticoSanoPuedeSerAdoptado() {
         AnimalDomestico perro = new AnimalDomestico(1L, "Firulais", nuevaFicha(), new Sano(), TipoDomestico.PERRO);
 
-        assertTrue(perro.puedeSerAdoptado());
+        assertTrue(perro.esAdoptable());
         assertFalse(perro.estaEnTratamiento());
     }
 
@@ -28,20 +28,20 @@ class AnimalAdopcionTest {
     void domesticoEnTratamientoNoPuedeSerAdoptado() {
         AnimalDomestico gato = new AnimalDomestico(2L, "Michi", nuevaFicha(), new EnTratamiento(), TipoDomestico.GATO);
 
-        assertFalse(gato.puedeSerAdoptado());
+        assertFalse(gato.esAdoptable());
         assertTrue(gato.estaEnTratamiento());
     }
 
     @Test
     void domesticoRecuperadoVuelveAEstarDisponible() {
         AnimalDomestico gato = new AnimalDomestico(2L, "Michi", nuevaFicha(), new EnTratamiento(), TipoDomestico.GATO);
-        assertFalse(gato.puedeSerAdoptado());
+        assertFalse(gato.esAdoptable());
 
         // La transicion vive dentro del estado (State): EnTratamiento -> Recuperado.
         gato.finalizarTratamiento();
 
         assertTrue(gato.getEstado() instanceof Recuperado);
-        assertTrue(gato.puedeSerAdoptado());
+        assertTrue(gato.esAdoptable());
         assertFalse(gato.estaEnTratamiento());
     }
 
@@ -56,6 +56,6 @@ class AnimalAdopcionTest {
     void salvajeNuncaPuedeSerAdoptado() {
         AnimalSalvaje zorro = new AnimalSalvaje(3L, "Zorrito", nuevaFicha(), new Sano(), TipoSalvaje.ZORRO);
 
-        assertFalse(zorro.puedeSerAdoptado());
+        assertFalse(zorro.esAdoptable());
     }
 }
