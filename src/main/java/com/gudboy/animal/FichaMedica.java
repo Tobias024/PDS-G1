@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.gudboy.adopcion.Visita;
 import com.gudboy.exportacion.IExportadorStrategy;
 
 public class FichaMedica {
@@ -14,6 +15,7 @@ public class FichaMedica {
     private int edad;
     private String condicionMedica;
     private final List<RegistroAtencion> registros = new ArrayList<>();
+    private final List<Visita> visitas = new ArrayList<>();
     private IExportadorStrategy exportador;
 
     public FichaMedica(long id, double altura, double peso, int edad, String condicionMedica) {
@@ -26,6 +28,14 @@ public class FichaMedica {
 
     public void agregarRegistro(RegistroAtencion registro) {
         registros.add(registro);
+    }
+
+    public void agregarVisita(Visita visita) {
+        visitas.add(visita);
+    }
+
+    public List<Visita> getVisitas() {
+        return Collections.unmodifiableList(visitas);
     }
 
     public void setExportador(IExportadorStrategy exportador) {
