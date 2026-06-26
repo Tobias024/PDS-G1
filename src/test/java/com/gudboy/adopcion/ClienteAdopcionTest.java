@@ -26,6 +26,18 @@ class ClienteAdopcionTest {
     }
 
     @Test
+    void clientePuedeRegistrarTiposDeAnimalesInteresados() {
+        Cliente cliente = nuevoCliente();
+
+        cliente.agregarTipoInteresado(TipoDomestico.PERRO);
+        cliente.agregarTipoInteresado(TipoDomestico.GATO);
+
+        assertEquals(2, cliente.getTiposInteresados().size());
+        assertTrue(cliente.getTiposInteresados().contains(TipoDomestico.PERRO));
+        assertTrue(cliente.getTiposInteresados().contains(TipoDomestico.GATO));
+    }
+
+    @Test
     void clienteNuevoPuedeAdoptar() {
         Cliente cliente = nuevoCliente();
 
