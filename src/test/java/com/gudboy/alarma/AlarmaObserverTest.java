@@ -56,6 +56,16 @@ class AlarmaObserverTest {
     }
 
     @Test
+    void aplicarAntiparasitoEsUnaAccionValida() {
+        AplicarAntiparasito accion = new AplicarAntiparasito();
+
+        accion.realizar("Antiparasitario aplicado");
+
+        assertTrue(accion.isCompletado());
+        assertEquals("Antiparasitario aplicado", accion.getComentario());
+    }
+
+    @Test
     void realizarEncapsulaEjecutarYCompletar() {
         ControlParasitos accion = new ControlParasitos();
 
