@@ -36,8 +36,18 @@ unitarios con JUnit 5.
   Al dispararse, la alarma notifica a todos los veterinarios suscriptos.
 - **Adapter** (`autenticacion`): `AdaptadorAutenticacion` adapta el `AuthServiceExterno`
   (no modificable) a la interfaz `IAutenticacion` que espera el sistema.
-- **Polimorfismo / GRASP**: `puedeSerAdoptado()` es polimorfico (`AnimalSalvaje` siempre
-  retorna false; `AnimalDomestico` depende del estado). `FichaMedica` es Experto de sus
+- **Template Method** (`alarma`): `AccionAlarma.realizar(comentario)` es el metodo plantilla
+  que define el algoritmo fijo: invocar el hook abstracto `ejecutar()` y luego marcar la
+  accion como `completada()`. Las subclases (`Vacunar`, `ControlParasitos`, etc.) solo
+  sobreescriben `ejecutar()`; el orden y la logica de cierre son invariantes y viven en la
+  clase abstracta, eliminando la responsabilidad del llamador de conocer esos pasos.
+- **Decorator** (`notificacion`): `NotificadorDecorator` envuelve cualquier `INotificador`
+  y permite agregar comportamiento en capas sin modificar los notificadores existentes.
+  `NotificadorConLog` registra cada envio, `NotificadorConPrefijo` antepone un texto al
+  mensaje y `NotificadorConReintento` reintenta el envio ante fallos. Los decoradores son
+  apilables entre si y con cualquier canal concreto (SMS, WhatsApp, Email).
+- **Polimorfismo / GRASP**: `esAdoptable()` es polimorfico (`AnimalSalvaje` siempre
+  retorna false; `AnimalDomestico` delega en el estado). `FichaMedica` es Experto de sus
   registros y `Alarma` es Creator de sus acciones (composicion).
 
 ## Estructura
@@ -49,7 +59,7 @@ src/main/java/com/gudboy
   alarma          Alarma (Observer), AccionAlarma y acciones concretas
   usuario         Usuario, Veterinario, Visitador
   exportacion     IExportadorStrategy (Strategy) y exportadores PDF / Excel
-  notificacion    INotificador (Strategy) y notificadores SMS / WhatsApp / Email
+  notificacion    INotificador (Strategy), notificadores SMS / WhatsApp / Email y decoradores
   adopcion        Cliente, Adopcion, Seguimiento, Visita, Encuesta, Cadencia
   autenticacion   IAutenticacion, AdaptadorAutenticacion (Adapter), AuthServiceExterno
 ```

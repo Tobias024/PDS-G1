@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.gudboy.animal.AnimalDomestico;
+import com.gudboy.animal.TipoDomestico;
 
 public class Cliente {
 
@@ -20,6 +21,7 @@ public class Cliente {
     private boolean tieneOtrasMascotas;
     private String motivoAdopcion;
     private final List<Adopcion> adopciones = new ArrayList<>();
+    private final List<TipoDomestico> tiposInteresados = new ArrayList<>();
 
     public Cliente(String nombre, String apellido, String estadoCivil, String email, String telefono,
                    Ocupacion ocupacion, boolean tieneOtrasMascotas, String motivoAdopcion) {
@@ -42,13 +44,21 @@ public class Cliente {
         if (!puedeAdoptar()) {
             throw new IllegalStateException("El cliente alcanzo el maximo de adopciones permitidas");
         }
-        if (!animal.puedeSerAdoptado()) {
+        if (!animal.esAdoptable()) {
             throw new IllegalStateException("El animal no se encuentra disponible para adopcion");
         }
         Adopcion adopcion = new Adopcion(LocalDate.now(), motivo, animal);
         animal.setEnAdopcion(false);
         adopciones.add(adopcion);
         return adopcion;
+    }
+
+    public void agregarTipoInteresado(TipoDomestico tipo) {
+        tiposInteresados.add(tipo);
+    }
+
+    public List<TipoDomestico> getTiposInteresados() {
+        return Collections.unmodifiableList(tiposInteresados);
     }
 
     public List<Adopcion> getAdopciones() {

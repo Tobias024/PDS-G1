@@ -10,6 +10,11 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
+import com.gudboy.adopcion.Encuesta;
+import com.gudboy.adopcion.NivelCalidad;
+import com.gudboy.adopcion.Visita;
 import com.gudboy.animal.FichaMedica;
 
 class ExportacionStrategyTest {
@@ -49,6 +54,18 @@ class ExportacionStrategyTest {
 
         ficha.setExportador(new ExportadorExcel());
         assertTrue(capturarExportacion(ficha).contains("EXCEL"));
+    }
+
+    @Test
+    void fichaMedicaRegistraVisitasDomicilio() {
+        FichaMedica ficha = nuevaFicha();
+        Encuesta encuesta = new Encuesta(NivelCalidad.BUENO, NivelCalidad.BUENO, NivelCalidad.REGULAR);
+        Visita visita = new Visita(LocalDate.now(), encuesta, true);
+
+        ficha.agregarVisita(visita);
+
+        assertEquals(1, ficha.getVisitas().size());
+        assertTrue(ficha.getVisitas().contains(visita));
     }
 
     @Test

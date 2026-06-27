@@ -23,7 +23,7 @@ public abstract class Animal {
         this.estado = estado;
     }
 
-    public abstract boolean puedeSerAdoptado();
+    public abstract boolean esAdoptable();
 
     public boolean estaEnTratamiento() {
         return estado instanceof EnTratamiento;

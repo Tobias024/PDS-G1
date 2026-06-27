@@ -9,6 +9,7 @@ import com.gudboy.alarma.AccionAlarma;
 import com.gudboy.alarma.Alarma;
 import com.gudboy.alarma.IVeterinarioObserver;
 import com.gudboy.animal.RegistroAtencion;
+import com.gudboy.animal.TipoRegistro;
 
 public class Veterinario extends Usuario implements IVeterinarioObserver {
 
@@ -29,10 +30,10 @@ public class Veterinario extends Usuario implements IVeterinarioObserver {
     }
 
     // Cualquier veterinario puede atender una alarma disparada.
-    public RegistroAtencion atenderAlarma(Alarma alarma, String comentario, boolean esTratamiento, boolean finalizado) {
+    public RegistroAtencion atenderAlarma(Alarma alarma, String comentario, boolean esTratamiento, boolean finalizado,
+                                          TipoRegistro tipoRegistro) {
         for (AccionAlarma accion : alarma.getAcciones()) {
-            accion.ejecutar();
-            accion.completada(comentario);
+            accion.realizar(comentario);
         }
 
         RegistroAtencion registro = new RegistroAtencion(
@@ -40,7 +41,8 @@ public class Veterinario extends Usuario implements IVeterinarioObserver {
                 this,
                 new ArrayList<>(alarma.getAcciones()),
                 esTratamiento,
-                finalizado);
+                finalizado,
+                tipoRegistro);
 
         alarma.getAnimal().getFichaMedica().agregarRegistro(registro);
         alertasPendientes.remove(alarma);

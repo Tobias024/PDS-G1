@@ -11,6 +11,7 @@ import com.gudboy.animal.AnimalDomestico;
 import com.gudboy.animal.FichaMedica;
 import com.gudboy.animal.RegistroAtencion;
 import com.gudboy.animal.TipoDomestico;
+import com.gudboy.animal.TipoRegistro;
 import com.gudboy.animal.estado.EnTratamiento;
 import com.gudboy.usuario.Veterinario;
 
@@ -56,12 +57,51 @@ class AlarmaObserverTest {
     }
 
     @Test
+    void registroAtencionTieneTipoRegistro() {
+        Veterinario veterinario = new Veterinario("v1", "Dr. House", "house@gudboy.com");
+        alarma.subscribir(veterinario);
+        alarma.disparar();
+
+        RegistroAtencion registro = veterinario.atenderAlarma(alarma, "Control", false, false,
+                TipoRegistro.CONTROL_PARASITOS);
+
+        assertEquals(TipoRegistro.CONTROL_PARASITOS, registro.getTipoRegistro());
+    }
+
+    @Test
+    void tipoRegistroIncluyeVisitaDomicilioYAntiparasitos() {
+        assertEquals(TipoRegistro.VISITA_DOMICILIO, TipoRegistro.valueOf("VISITA_DOMICILIO"));
+        assertEquals(TipoRegistro.ANTIPARASITOS, TipoRegistro.valueOf("ANTIPARASITOS"));
+    }
+
+    @Test
+    void aplicarAntiparasitoEsUnaAccionValida() {
+        AplicarAntiparasito accion = new AplicarAntiparasito();
+
+        accion.realizar("Antiparasitario aplicado");
+
+        assertTrue(accion.isCompletado());
+        assertEquals("Antiparasitario aplicado", accion.getComentario());
+    }
+
+    @Test
+    void realizarEncapsulaEjecutarYCompletar() {
+        ControlParasitos accion = new ControlParasitos();
+
+        accion.realizar("Control aplicado");
+
+        assertTrue(accion.isCompletado());
+        assertEquals("Control aplicado", accion.getComentario());
+    }
+
+    @Test
     void atenderAlarmaCompletaLasAccionesYRegistraEnLaFichaMedica() {
         Veterinario veterinario = new Veterinario("v1", "Dr. House", "house@gudboy.com");
         alarma.subscribir(veterinario);
         alarma.disparar();
 
-        RegistroAtencion registro = veterinario.atenderAlarma(alarma, "Tratamiento aplicado", true, false);
+        RegistroAtencion registro = veterinario.atenderAlarma(alarma, "Tratamiento aplicado", true, false,
+                TipoRegistro.CONTROL_PARASITOS);
 
         for (AccionAlarma accion : alarma.getAcciones()) {
             assertTrue(accion.isCompletado());

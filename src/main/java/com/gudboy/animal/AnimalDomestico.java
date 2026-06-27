@@ -14,7 +14,7 @@ public class AnimalDomestico extends Animal {
 
     // Depende del estado: un animal en tratamiento no puede ser adoptado hasta finalizarlo.
     @Override
-    public boolean puedeSerAdoptado() {
+    public boolean esAdoptable() {
         return estado.esAdoptable();
     }
 
